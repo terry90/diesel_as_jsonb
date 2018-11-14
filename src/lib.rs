@@ -4,7 +4,9 @@ extern crate proc_macro2;
 extern crate syn;
 #[macro_use]
 extern crate quote;
+extern crate heck;
 
+use heck::SnakeCase;
 use proc_macro::TokenStream;
 use proc_macro2::Span;
 use syn::{DeriveInput, Ident};
@@ -13,10 +15,14 @@ use syn::{DeriveInput, Ident};
 pub fn hello_macro_derive(input: TokenStream) -> TokenStream {
     let ast: DeriveInput = syn::parse(input).unwrap();
     let name = &ast.ident;
-    let scope = Ident::new(&format!("{}_as_jsonb", name), Span::call_site());
+    let scope = Ident::new(
+        &format!("{}_as_jsonb", name).to_snake_case(),
+        Span::call_site(),
+    );
     let proxy = Ident::new(&format!("{}ValueProxy", name), Span::call_site());
     let gen = quote! {
         mod #scope {
+            use super::*;
             use diesel::sql_types::Jsonb;
             use std::io::Write;
             use diesel::pg::Pg;
