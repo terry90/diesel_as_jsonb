@@ -1,5 +1,5 @@
 [package]
-name = "diesel_as_jsonb"
+name = "diesel-as-jsonb"
 version = "0.1.2"
 authors = ["Terry Raimondo <terry.raimondo@gmail.com>"]
 license = "MIT"
@@ -10,7 +10,7 @@ repository = "https://github.com/terry90/diesel_as_jsonb"
 proc-macro = true
 
 [dependencies]
-quote = "0.6.10"
-syn = { version = "0.15.20", features = ["derive"] }
-proc-macro2 = "0.4.23"
-heck = "0.3.0"
+quote = "0.6.12"
+syn = { version = "0.15.34", features = ["derive"] }
+proc-macro2 = "0.4.30"
+heck = "0.3.1"
