@@ -5,12 +5,13 @@ authors = ["Terry Raimondo <terry.raimondo@gmail.com>"]
 license = "MIT"
 description = "Use your structs as Jsonb with diesel and PG"
 repository = "https://github.com/terry90/diesel_as_jsonb"
+edition = "2018"
 
 [lib]
 proc-macro = true
 
 [dependencies]
-quote = "0.6.12"
-syn = { version = "0.15.34", features = ["derive"] }
-proc-macro2 = "0.4.30"
-heck = "0.3.1"
+quote = "1.0"
+syn = { version = "1.0", features = ["derive"] }
+proc-macro2 = "1.0"
+heck = "0.3"
