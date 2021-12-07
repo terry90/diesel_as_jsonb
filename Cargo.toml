@@ -1,6 +1,6 @@
 [package]
-name = "diesel-as-jsonb"
-version = "0.1.2"
+name = "diesel_as_jsonb"
+version = "0.1.3"
 authors = ["Terry Raimondo <terry.raimondo@gmail.com>"]
 license = "MIT"
 description = "Use your structs as Jsonb with diesel and PG"
