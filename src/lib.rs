@@ -1,18 +1,12 @@
 #![recursion_limit = "256"]
-extern crate proc_macro;
-extern crate proc_macro2;
-extern crate syn;
-#[macro_use]
-extern crate quote;
-extern crate heck;
-
 use heck::SnakeCase;
 use proc_macro::TokenStream;
 use proc_macro2::Span;
+use quote::quote;
 use syn::{DeriveInput, Ident};
 
 #[proc_macro_derive(AsJsonb)]
-pub fn hello_macro_derive(input: TokenStream) -> TokenStream {
+pub fn asjsonb_macro_derive(input: TokenStream) -> TokenStream {
     let ast: DeriveInput = syn::parse(input).unwrap();
     let name = &ast.ident;
     let scope = Ident::new(
@@ -46,7 +40,7 @@ pub fn hello_macro_derive(input: TokenStream) -> TokenStream {
 
             impl ToSql<Jsonb, Pg> for #name {
                 fn to_sql<W: Write>(&self, out: &mut Output<W, Pg>) -> serialize::Result {
-                    try!(out.write_all(&[1]));
+                    r#try!(out.write_all(&[1]));
                     serde_json::to_writer(out, self)
                         .map(|_| IsNull::No)
                         .map_err(Into::into)
