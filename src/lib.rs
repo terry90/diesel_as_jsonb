@@ -1,5 +1,5 @@
 #![recursion_limit = "256"]
-use heck::SnakeCase;
+use heck::ToSnakeCase;
 use proc_macro::TokenStream;
 use proc_macro2::Span;
 use quote::quote;
@@ -14,23 +14,25 @@ pub fn asjsonb_macro_derive(input: TokenStream) -> TokenStream {
         Span::call_site(),
     );
     let proxy = Ident::new(&format!("{}ValueProxy", name), Span::call_site());
+
     let gen = quote! {
         mod #scope {
             use super::*;
-            use diesel::sql_types::Jsonb;
             use std::io::Write;
-            use diesel::pg::Pg;
+            use diesel::sql_types::Jsonb;
+            use diesel::pg::{Pg, PgValue};
             use diesel::serialize::{self, IsNull, Output, ToSql};
             use diesel::deserialize::{self, FromSql};
 
             #[derive(FromSqlRow, AsExpression)]
             #[diesel(foreign_derive)]
-            #[sql_type = "Jsonb"]
+            #[diesel(sql_type = Jsonb)]
             struct #proxy(#name);
 
             impl FromSql<Jsonb, Pg> for #name {
-                fn from_sql(bytes: Option<&[u8]>) -> deserialize::Result<Self> {
-                    let bytes = not_none!(bytes);
+                fn from_sql(bytes: PgValue) -> deserialize::Result<Self> {
+                    let bytes = bytes.as_bytes();
+
                     if bytes[0] != 1 {
                         return Err("Unsupported JSONB encoding version".into());
                     }
@@ -39,8 +41,8 @@ pub fn asjsonb_macro_derive(input: TokenStream) -> TokenStream {
             }
 
             impl ToSql<Jsonb, Pg> for #name {
-                fn to_sql<W: Write>(&self, out: &mut Output<W, Pg>) -> serialize::Result {
-                    r#try!(out.write_all(&[1]));
+                fn to_sql(&self, out: &mut Output<Pg>) -> serialize::Result {
+                    out.write_all(&[1])?;
                     serde_json::to_writer(out, self)
                         .map(|_| IsNull::No)
                         .map_err(Into::into)
