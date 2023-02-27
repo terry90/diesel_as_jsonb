@@ -9,7 +9,7 @@ struct Something {
 }
 
 struct Wrapper {
-    things: Vec<Something> // For JSONB[]
-    thing: Something // For JSONB
+    things: Vec<Something> // For field type Array<Jsonb>
+    thing: Something // For field type Jsonb
 }
 ```
