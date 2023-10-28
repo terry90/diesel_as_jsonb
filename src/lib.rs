@@ -19,11 +19,11 @@ pub fn asjsonb_macro_derive(input: TokenStream) -> TokenStream {
         mod #scope {
             use super::*;
             use std::io::Write;
-            use diesel::{AsExpression, FromSqlRow};
-            use diesel::sql_types::Jsonb;
-            use diesel::pg::{Pg, PgValue};
-            use diesel::serialize::{self, IsNull, Output, ToSql};
-            use diesel::deserialize::{self, FromSql};
+            use ::diesel::{AsExpression, FromSqlRow};
+            use ::diesel::sql_types::Jsonb;
+            use ::diesel::pg::{Pg, PgValue};
+            use ::diesel::serialize::{self, IsNull, Output, ToSql};
+            use ::diesel::deserialize::{self, FromSql};
 
             #[derive(FromSqlRow, AsExpression)]
             #[diesel(foreign_derive)]
