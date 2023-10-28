@@ -17,6 +17,7 @@ pub fn asjsonb_macro_derive(input: TokenStream) -> TokenStream {
 
     let gen = quote! {
         mod #scope {
+            use super::#name;
             use std::io::Write;
             use ::diesel::{AsExpression, FromSqlRow};
             use ::diesel::sql_types::Jsonb;
