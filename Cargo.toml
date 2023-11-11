@@ -1,6 +1,6 @@
 [package]
 name = "diesel_as_jsonb"
-version = "1.0.0"
+version = "1.0.1"
 authors = ["Terry Raimondo <terry.raimondo@gmail.com>"]
 license = "MIT"
 description = "Use your structs as Jsonb with diesel and PG"
@@ -12,6 +12,6 @@ proc-macro = true
 
 [dependencies]
 quote = "1.0"
-syn = { version = "1.0", features = ["derive"] }
+syn = { version = "2.0.39", features = ["derive"] }
 proc-macro2 = "1.0"
 heck = "0.4.0"
