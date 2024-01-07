@@ -3,7 +3,7 @@
 ## Usage
 
 ```rust
-#[derive(AsJsonb)]]
+#[derive(AsJsonb)]
 struct Something {
     thing: String,
 }
